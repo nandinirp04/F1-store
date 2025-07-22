@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>log In</title>
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+
+<div class="auth-container">
+  <h2>Login</h2>
+  <form>
+    <input type="email" placeholder="Email" required />
+    <input type="password" placeholder="Password" required />
+    <button type="submit">Login</button>
+  </form>
+  <p><a href="forgot.html">Forgot password?</a></p>
+  <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+</div>
+<script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwKBjGf0l08BwEFVhYNXrbo-zv113BqnoPgzZKjcrnQglocEv6snS2EY6PqW4S_YP0b/exec";
+    const form = document.getElementById('signup-form');
+    const msg = document.getElementById('response-msg');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(form)
+      })
+      .then(response => {
+        msg.textContent = '✅ Signup successful! Data sent to Google Sheet.';
+        form.reset();
+      })
+      .catch(error => {
+        msg.textContent = '❌ Error: Could not submit form.';
+        console.error('Error!', error.message);
+      });
+    });
+  </script>
+  
+</body>
+</html>
