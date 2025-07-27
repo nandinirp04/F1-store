@@ -2,188 +2,185 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Forgot Password  - F1 Streetwear</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Forgot Password</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f4f4f4;
+      background: #f4f4f4;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 2rem;
+      height: 100vh;
+      margin: 0;
     }
 
     .auth-container {
-      background: #fff;
-      padding: 2.5rem 2rem;
+      background: white;
+      padding: 2rem;
       border-radius: 12px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      border: 1px solid #eee;
-    }
-
-    .auth-container h2 {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 350px;
       text-align: center;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
     }
 
-    .auth-container input {
+    .otp{
+      color:#f4f4f4;
+    }
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    input, button {
       width: 100%;
-      padding: 0.8rem 1rem;
-      margin-top: 0.8rem;
+      padding: 0.9rem;
+      margin-top: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 0.95rem;
-      transition: border 0.2s;
-    }
-
-    .auth-container input:focus {
-      border-color: #e10600;
-      outline: none;
-    }
-
-    .auth-container button {
-      width: 100%;
-      background: #e10600;
-      color: white;
-      border: none;
-      padding: 0.9rem;
-      margin-top: 1rem;
-      border-radius: 8px;
       font-size: 1rem;
-      font-weight: 500;
+    }
+
+    input {
+      background-color: #1e1e1e;
+      color: white;
+      width: 75%;
+    }
+
+    input::placeholder {
+      color: #aaa;
+      
+    }
+
+    button {
+      background-color: #e10600;
+      color: white;
+      width: 100%;
+      font-weight: bold;
+      border: none;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
-    .auth-container button:hover {
-      background: #cc0500;
+
+    
+    button:hover {
+      background-color: #c09493;
+
     }
 
-    .auth-container p {
+    a {
+      display: block;
       margin-top: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    .auth-container a {
       color: #e10600;
       text-decoration: none;
-      font-weight: 500;
     }
 
-    .auth-container a:hover {
+
+    a:hover {
       text-decoration: underline;
     }
+
+    #otp-section {
+      display: none;
+    }
+
+    #otp-color{
+      width: 84%;
+      background-color: #aaa;
+    }
+    
+     .otp{
+      width: 75%;
+      } 
+      
+    .otp-width{
+      width: 60%;
+    }   
   </style>
 </head>
 <body>
 
   <div class="auth-container">
-    <h2>Forgot Password </h2>
-    <form id="otp-form">
-      <!-- Step 1: Email/Mobile -->
-      <input type="text" id="contact" placeholder="Enter your email or mobile" required />
-      <button type="button" onclick="sendOTP()">Send OTP</button>
+    <h2>Forgot Password</h2>
 
-      <!-- Step 2: OTP Input (Shown after clicking Send OTP) -->
-      <div id="otp-section" style="display:none;">
-        <input type="text" id="otp" placeholder="Enter OTP" required />
-        <button type="button" onclick="verifyOTP()">Verify OTP</button>
-      </div>
+    <!-- Email Input -->
+    <input type="email" id="contact" placeholder="Enter your email" required />
+     <button id="otp-color"  onclick="sendOTP()">Send OTP</button>
 
-      <!-- Step 3: New Password Input (Shown after OTP verified) -->
-      <div id="reset-section" style="display:none;">
-        <input type="password" placeholder="New Password" required />
-        <input type="password" placeholder="Confirm Password" required />
-        <button type="submit">Reset Password</button>
-      </div>
+    <input type="otp " name="otp" class="otp" id="contact" placeholder="Enter OTP" >
+         <button  class="otp-width"onclick="location.href='/Auth/reset.html'">GO to Reset Password</button>
+            <!-- OTP Input Section -->
+   <div id="otp-section">
+  <!-- <input type="text" id="contact" placeholder="Enter OTP"  /> -->
+  <button onclick="verifyOTP()">Go to Reset Password Page</button>
+</div>
 
-      <p><a href="/Auth/login.html">Back to Login</a></p>
-    </form>
+
+    <a href="/Auth/login.html">Back to Login</a>
   </div>
 
-<script>
-const scriptURL = "https://script.google.com/macros/s/YOAKfycbwo6TkqqanT3oDSKH-tvax2j2ARGourQd7jbjwpjbj6cWSUCXMRePJkftyT_ZhdAfsUR_DEPLOYMENT_ID/exec";
-let userEmail = "";
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx40SIz3YBCmrfON2W4v6cRPGf86WUx_onbR4fLwpdqfRUsQRo4b89N2-Xt11X1JoVO/exec"; // Replace with your actual script URL
+// https://docs.google.com/spreadsheets/d/1UZ2VR8U5k03L1eidlQuQmKLZGLYbP_O2OXa1Wxrcoy8/edit?usp=sharing
+    function sendOTP() {
+      const email = document.getElementById("contact").value.trim();
+      if (!email) {
+        alert("Please enter your email.");
+        return;
+      }
 
-function sendOTP() {
-  const contact = document.getElementById('contact').value.trim();
-  if (!contact) return alert("Enter your email");
-
-  userEmail = contact;
-
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ action: "send_otp", email: contact }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("OTP sent to your email.");
-      document.getElementById('otp-section').style.display = 'block';
-    } else {
-      alert("Failed to send OTP.");
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "sendOTP",
+          email: email
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "sent") {
+          alert("OTP sent to your email.");
+          document.getElementById("otp-section").style.display = "block";
+        } else {
+          alert(data.message || "Failed to send OTP.");
+        }
+      })
+      .catch(err => {
+        console.error("Send OTP Error:", err);
+        alert("Something went wrong while sending OTP.");
+      });
     }
-  });
-}
 
-function verifyOTP() {
-  const otp = document.getElementById('otp').value.trim();
-  if (!otp) return alert("Enter OTP");
+    function verifyOTP() {
+      const email = document.getElementById("contact").value.trim();
+      const otp = document.getElementById("otp").value.trim();
 
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ action: "verify_otp", email: userEmail, otp }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("OTP verified.");
-      document.getElementById('reset-section').style.display = 'block';
-    } else {
-      alert("Invalid OTP.");
+      if (!otp) {
+        alert("Please enter the OTP.");
+        return;
+      }
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "verifyOTP",
+          email: email,
+          otp: otp
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "verified") {
+          alert("OTP verified!");
+          window.location.href = `/Auth/reset.html?email=${encodeURIComponent(email)}`;
+        } else {
+          alert(data.message || "Incorrect or expired OTP.");
+        }
+      })
+      .catch(err => {
+        console.error("Verify OTP Error:", err);
+        alert("Something went wrong while verifying OTP.");
+      });
     }
-  });
-}
-
-document.getElementById("otp-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const newPass = document.querySelector("#reset-section input[type='password']").value;
-  const confirmPass = document.querySelectorAll("#reset-section input[type='password']")[1].value;
-
-  if (newPass !== confirmPass) return alert("Passwords don't match");
-
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ action: "reset_password", email: userEmail, newPassword: newPass }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("Password reset successful!");
-      window.location.href = "login.html";
-    } else {
-      alert("Failed to reset password.");
-    }
-  });
-});
-</script>
+  </script>
 
 </body>
 </html>

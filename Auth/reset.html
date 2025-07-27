@@ -1,89 +1,153 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>log In</title>
-  <link rel="stylesheet" href="auth.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reset Password - F1 Streetwear</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .auth-container {
+      background: #fff;
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      margin-top: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #1e1e1e;
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    input:focus {
+      border-color: #e10600;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      background: #e10600;
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      margin-top: 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #cc0500;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .back-link a {
+      color: #e10600;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-<div class="auth-container">
-  <h2>Reset Password</h2>
-  <form onsubmit="handleReset(event)">
-    <input type="text" placeholder="Enter OTP" required />
-    <input type="password" placeholder="New Password" required />
-    <button type="submit">Reset Password</button>
-  </form>
-</div>
+  <div class="auth-container">
+    <h2>Reset Password</h2>
+    <form id="reset-form" onsubmit="event.preventDefault(); resetPassword();">
 
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbwo6TkqqanT3oDSKH-tvax2j2ARGourQd7jbjwpjbj6cWSUCXMRePJkftyT_ZhdAfs/exec";
-let userEmail = "";
+      <input type="email" id="email" placeholder="Email" readonly />
+      <input type="password" id="new-password" placeholder="New Password" required />
+      <input type="password" id="confirm-password" placeholder="Confirm Password" required />
 
-function sendOTP() {
-  const contact = document.getElementById('contact').value.trim();
-  if (!contact) return alert("Enter your email");
+      <button type="submit">Update Password</button>
 
-  userEmail = contact;
+      <div class="back-link">
+        <p><a href="/Auth/login.html">Back to Login</a></p>
+      </div>
 
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ action: "send_otp", email: contact }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("OTP sent to your email.");
-      document.getElementById('otp-section').style.display = 'block';
-    } else {
-      alert("Failed to send OTP.");
+    </form>
+  </div>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx40SIz3YBCmrfON2W4v6cRPGf86WUx_onbR4fLwpdqfRUsQRo4b89N2-Xt11X1JoVO/exec";
+
+    // Get email from URL query
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+    document.getElementById("email").value = email || "";
+
+    function resetPassword() {
+      const newPassword = document.getElementById("new-password").value.trim();
+      const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+      if (!newPassword || !confirmPassword) {
+        alert("Please fill in all password fields.");
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "resetPassword",
+          email: email,
+          newPassword: newPassword
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          alert("Password updated successfully!");
+          window.location.href = "/Auth/login.html";
+        } else {
+          alert(data.message || "Failed to reset password.");
+        }
+      })
+      .catch(err => {
+        alert("Error resetting password.");
+        console.error(err);
+      });
     }
-  });
-}
-
-function verifyOTP() {
-  const otp = document.getElementById('otp').value.trim();
-  if (!otp) return alert("Enter OTP");
-
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ action: "verify_otp", email: userEmail, otp }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("OTP verified.");
-      document.getElementById('reset-section').style.display = 'block';
-    } else {
-      alert("Invalid OTP.");
-    }
-  });
-}
-
-document.getElementById("otp-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const newPass = document.querySelector("#reset-section input[type='password']").value;
-  const confirmPass = document.querySelectorAll("#reset-section input[type='password']")[1].value;
-
-  if (newPass !== confirmPass) return alert("Passwords don't match");
-
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ action: "reset_password", email: userEmail, newPassword: newPass }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("Password reset successful!");
-      window.location.href = "login.html";
-    } else {
-      alert("Failed to reset password.");
-    }
-  });
-});
-</script>
+  </script>
 
 </body>
 </html>
