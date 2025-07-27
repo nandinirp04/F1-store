@@ -128,6 +128,36 @@ F1 STREETWEAR/
 
 ---
 
+
+## 🚀 How to Run the Project Locally
+
+> Make sure you have [VS Code](https://code.visualstudio.com/) or any code editor installed.
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/f1-streetwear.git
+   cd f1-streetwear
+2. Open home.html in your browser:
+
+You can drag & drop it into your browser.
+
+Or, use VS Code Live Server:
+
+Right-click home.html → “Open with Live Server”
+
+3.Navigate through the app:
+
+Visit /scripts/home.html
+
+Click categories → /Category/Category.html
+
+Login/Signup via /Auth/login.html, etc.
+
+4.Google Apps Script already deployed
+All backend logic (signup, OTP, reset) is handled via deployed web apps.
+
+
+
 ## 🧑‍💻 Made By
 
 **Nandini Pingalkar**  
