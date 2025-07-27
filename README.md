@@ -157,6 +157,11 @@ Login/Signup via /Auth/login.html, etc.
 All backend logic (signup, OTP, reset) is handled via deployed web apps.
 
 
+📌 Note
+This is a frontend prototype. Backend logic is powered via Google Apps Script, and data is stored in Google Sheets. No actual payment or checkout integration is implemented.
+
+
+
 
 ## 🧑‍💻 Made By
 
